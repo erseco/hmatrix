@@ -85,3 +85,9 @@ Validated with `npm run build` and ten unit tests (`npm test`). Chrome checks co
 The `.github/workflows/deploy.yml` workflow tests and builds the app on every push to `main`, then publishes **only `dist/`** to GitHub Pages. In repository **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Do not publish the repository root: its `index.html` is a Vite source entry point and requires compilation.
 
 Vite uses `/hmatrix/` as its base path, including the JS/CSS bundle, manifest, camera worker/model and service worker. The published URL is https://erseco.github.io/hmatrix/. If the repository name changes, update `base` in `vite.config.ts`.
+
+## Dependency updates
+
+Every pull request runs `npm ci`, `npm test` and `npm run build` with Node.js 22. The `Build and test` check is required on `main`, alongside an approving review. Dependabot patch/minor updates are automatically approved and queued for **squash merge**; GitHub merges them only after branch requirements pass. Major updates require manual review. A failed install, test or build blocks the merge.
+
+The metadata-only `pull_request_target` workflow never checks out or executes PR code. It uses GitHub's built-in token; no personal access token is needed. Repository settings must enable auto-merge and allow Actions to approve pull requests. The existing Pages workflow publishes the merged result.
