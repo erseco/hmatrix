@@ -42,7 +42,7 @@ Camera access is requested only after pressing **Activar cámara**. Disable it i
 | Lateral motion / palm rotation | Signed vortex driven by hand velocity and orientation change |
 | Hold fist, then quickly open | Shockwave, with cooldown |
 
-Palm scale is calibrated when a hand first appears. Start at a comfortable distance, then approach the camera. Remove and reintroduce the hand to recalibrate. Pinch has priority over fist/open classification. Finger distances are normalized by palm size; entry/exit thresholds differ and output strengths are smoothed. Use good lighting and keep the whole hand in view. This is relative monocular depth, not metric depth sensing.
+Palm scale is calibrated when a hand first appears. Start at a comfortable distance, then approach the camera. Remove and reintroduce the hand to recalibrate. Pinch has priority over fist/open classification. Pinch uses three-dimensional fingertip separation normalized by palm size. Entry/exit thresholds differ, do not grow with sensitivity, and release when the hand closes into a fist. Output strengths are smoothed. Use good lighting and keep the whole hand in view. This is relative monocular depth, not metric depth sensing.
 
 ## Architecture
 
@@ -73,7 +73,7 @@ MediaPipe and its model retain their upstream licenses. Three.js is MIT licensed
 
 ## Verification
 
-Validated with `npm run build` and seven unit tests (`npm test`). Chrome checks cover real shader compilation/rendering, responsive layout, settings visibility, simulated camera-permission denial, classic-worker model initialization and inference on a blank image. The production page was reloaded and the detector ran successfully with the preview server stopped, confirming the offline cache includes the worker and model. Real hand accuracy, actual camera hardware and Android thermal/FPS behavior still require device testing.
+Validated with `npm run build` and ten unit tests (`npm test`). Chrome checks cover real shader compilation/rendering, responsive layout, settings visibility, simulated camera-permission denial, classic-worker model initialization and inference on a blank image. The production page was reloaded and the detector ran successfully with the preview server stopped, confirming the offline cache includes the worker and model. Real hand accuracy, actual camera hardware and Android thermal/FPS behavior still require device testing.
 
 ## GitHub Pages deployment
 

@@ -14,7 +14,7 @@ export class GestureRecognizer {
       const center = { x: (p[0].x + p[5].x + p[9].x + p[13].x + p[17].x) / 5, y: (p[0].y + p[5].y + p[9].y + p[13].y + p[17].y) / 5 };
       const x = 1 - center.x, y = center.y;
       const size = Math.max(0.015, distance(p[0], p[9]));
-      const pinch = distance(p[4], p[8]) / size;
+      const pinch = Math.hypot(p[4].x - p[8].x, p[4].y - p[8].y, p[4].z - p[8].z) / size;
       const openness = [8, 12, 16, 20].reduce((sum, tip) => sum + distance(p[tip], p[0]) / size, 0) / 4;
       const angle = Math.atan2(p[5].y - p[17].y, p[17].x - p[5].x);
       let state = this.states.get(id);
@@ -28,7 +28,8 @@ export class GestureRecognizer {
       state.vx += (vx - state.vx) * smooth; state.vy += (vy - state.vy) * smooth;
       state.x += (x - state.x) * smooth; state.y += (y - state.y) * smooth;
       state.size += (size - state.size) * smooth;
-      state.pinch = pinch < (state.pinch ? 0.75 : 0.32) * sensitivity;
+      // Sensitivity changes force strength, not the distance required to release a gesture.
+      state.pinch = openness >= 1.2 && pinch < (state.pinch ? 0.55 : 0.32);
       let burst = false;
       if (!state.pinch && openness < 1.2) {
         if (!state.grip) state.closedAt = time;
