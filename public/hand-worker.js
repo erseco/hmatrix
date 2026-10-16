@@ -1,7 +1,6 @@
-self.exports = {};
-importScripts('./vision_bundle.js');
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.assign(self, { exports: {} });
+importScripts('./vision_bundle.js');
 const { FilesetResolver, HandLandmarker } = self.exports;
 let landmarker;
 self.onmessage = async ({ data }) => {

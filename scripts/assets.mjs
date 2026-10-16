@@ -1,5 +1,5 @@
-import ts from 'typescript';
-import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { mkdir, readdir, copyFile, access, writeFile } from 'node:fs/promises';
 await mkdir('public/wasm', { recursive: true });
 await mkdir('public/models', { recursive: true });
@@ -12,5 +12,4 @@ try { await access(path); } catch {
 }
 
 await copyFile('node_modules/@mediapipe/tasks-vision/vision_bundle.cjs', 'public/vision_bundle.js');
-const worker = ts.transpileModule(await readFile('src/hand.worker.ts', 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText;
-await writeFile('public/hand-worker.js', "self.exports = {};\nimportScripts('./vision_bundle.js');\n" + worker);
+execFileSync(process.execPath, [fileURLToPath(new URL('../node_modules/typescript/bin/tsc', import.meta.url)), '--project', 'tsconfig.worker.json'], { stdio: 'inherit' });

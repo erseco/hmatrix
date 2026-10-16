@@ -1,4 +1,6 @@
-import type { HandLandmarker as Landmarker } from '@mediapipe/tasks-vision';
+type Landmarker = import('@mediapipe/tasks-vision').HandLandmarker;
+Object.assign(self, { exports: {} });
+importScripts('./vision_bundle.js');
 const { FilesetResolver, HandLandmarker } = (self as unknown as { exports: typeof import('@mediapipe/tasks-vision') }).exports;
 let landmarker: Landmarker | undefined;
 self.onmessage = async ({ data }) => {
