@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "noEmitOnError": true,
+    "moduleDetection": "legacy",
+    "lib": ["ES2022", "WebWorker"],
+    "types": [],
+    "rootDir": "src",
+    "outDir": "public"
+  },
+  "include": ["src/hand-worker.ts"],
+  "exclude": []
+}

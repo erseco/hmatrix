@@ -55,7 +55,7 @@ Palm scale is calibrated when a hand first appears. Start at a comfortable dista
 - `renderer.ts` — perspective camera, depth layers, quality/DPR limits and adaptive character counts.
 - `physics.ts` — typed-array spring displacements, velocity, radial/tangential/depth forces and expanding waves, integrated in substeps up to 120 Hz.
 - `input.ts` — pointer and touch inputs using the same fields as hand tracking.
-- `tracker.ts`, `hand.worker.ts` — camera lifecycle, 20 Hz inference in a classic worker, one transferable frame in flight, two hands. The assets script transpiles the worker and copies the CommonJS MediaPipe bundle; classic workers are required by its WASM loader.
+- `tracker.ts`, `hand-worker.ts` — camera lifecycle, 20 Hz inference in a classic worker, one transferable frame in flight, two hands. The assets script compiles the worker with the installed `tsc` CLI and `tsconfig.worker.json` (strict worker types), and copies the CommonJS MediaPipe bundle; classic workers are required by its WASM loader.
 - `gestures.ts` — palm/fingertip metrics, mirrored coordinates, temporal smoothing, pinch hysteresis, fist priority and burst cooldown.
 - `settings.ts`, `debug.ts`, `main.ts` — validated local settings, debugging, UI and lifecycle.
 - `public/sw.js`, `scripts/precache.mjs` — versioned production offline cache including worker, model, and SIMD/non-SIMD WASM.
@@ -78,7 +78,7 @@ MediaPipe and its model retain their upstream licenses. Three.js is MIT licensed
 
 ## Verification
 
-Validated with `npm run build` and ten unit tests (`npm test`). Chrome checks cover real shader compilation/rendering, responsive layout, settings visibility, simulated camera-permission denial, classic-worker model initialization and inference on a blank image. The production page was reloaded and the detector ran successfully with the preview server stopped, confirming the offline cache includes the worker and model. Real hand accuracy, actual camera hardware and Android thermal/FPS behavior still require device testing.
+Validated with `npm run build` and eleven tests (`npm test`). Chrome checks cover real shader compilation/rendering, responsive layout, settings visibility, simulated camera-permission denial, classic-worker model initialization and inference on a blank image. The production page was reloaded and the detector ran successfully with the preview server stopped, confirming the offline cache includes the worker and model. Real hand accuracy, actual camera hardware and Android thermal/FPS behavior still require device testing.
 
 ## GitHub Pages deployment
 

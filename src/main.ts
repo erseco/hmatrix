@@ -52,7 +52,7 @@ function start() {
     if (open) { $('#intro').style.visibility = 'hidden'; $('header').inert = false; document.body.classList.remove('immersive'); $('#close').focus(); }
     else { $('#intro').style.visibility = ''; $('#settings').focus(); immerse(); }
   }
-  $('#settings').onclick = () => panel($('#panel').hidden); $('#close').onclick = () => panel(false);
+  $('#settings').onclick = () => panel($('#panel').hasAttribute('hidden')); $('#close').onclick = () => panel(false);
   const help = $<HTMLDialogElement>('#help-dialog');
   function toggleHelp() {
     if (help.open) help.close();
