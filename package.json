@@ -1,0 +1,24 @@
+{
+  "name": "matrix-hand",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run assets && vite --host 0.0.0.0",
+    "build": "npm run assets && tsc --noEmit && vite build && node scripts/precache.mjs",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "assets": "node scripts/assets.mjs",
+    "postinstall": "npm run assets"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.32",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.180.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "tsx": "^4.20.6"
+  }
+}
