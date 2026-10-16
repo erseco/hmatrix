@@ -1,4 +1,4 @@
-# Matrix Hand
+# hmatrix
 
 A fullscreen Matrix-inspired digital rain surface with spring physics, mouse/touch simulation and private, on-device two-hand tracking. Built with strict TypeScript, Vite, Three.js and MediaPipe Tasks Vision. No backend, analytics, video upload or runtime CDN dependency.
 
