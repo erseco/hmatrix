@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open the localhost URL printed by Vite. Installation copies the pinned MediaPipe WASM runtime and downloads Google's official Hand Landmarker model into `public/`. The first installation needs internet access; subsequent builds and use need no external service.
+Open the localhost URL printed by Vite, under `/hmatrix/`. Installation copies the pinned MediaPipe WASM runtime and downloads Google's official Hand Landmarker model into `public/`. The first installation needs internet access; subsequent builds and use need no external service.
 
 ```sh
 npm test         # gesture and spring physics unit tests
@@ -74,3 +74,9 @@ MediaPipe and its model retain their upstream licenses. Three.js is MIT licensed
 ## Verification
 
 Validated with `npm run build` and seven unit tests (`npm test`). Chrome checks cover real shader compilation/rendering, responsive layout, settings visibility, simulated camera-permission denial, classic-worker model initialization and inference on a blank image. The production page was reloaded and the detector ran successfully with the preview server stopped, confirming the offline cache includes the worker and model. Real hand accuracy, actual camera hardware and Android thermal/FPS behavior still require device testing.
+
+## GitHub Pages deployment
+
+The `.github/workflows/deploy.yml` workflow tests and builds the app on every push to `main`, then publishes **only `dist/`** to GitHub Pages. In repository **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Do not publish the repository root: its `index.html` is a Vite source entry point and requires compilation.
+
+Vite uses `/hmatrix/` as its base path, including the JS/CSS bundle, manifest, camera worker/model and service worker. The published URL is https://erseco.github.io/hmatrix/. If the repository name changes, update `base` in `vite.config.ts`.
