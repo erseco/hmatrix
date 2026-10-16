@@ -31,7 +31,12 @@ Deploy `dist/` to any static HTTPS host. For an Android phone, use an HTTPS host
 | Mouse wheel | Change push / hole strength |
 | Double click / double tap | Expanding shockwave |
 | Touch toolbar | Choose push or hole; trigger a wave |
-| H / Settings button | Hide / show interface; open settings |
+| H / Help button | Open / close help for hand gestures, mouse and touch |
+| D | Toggle debug video, landmarks and gesture metrics |
+| Settings button | Open / close settings |
+| Escape | Close help or settings |
+
+To share a session that starts with debugging enabled, use https://erseco.github.io/hmatrix/?debug=1. This is the only supported URL parameter; it does not activate the camera or bypass permission. **D** still toggles debugging during the session.
 
 Camera access is requested only after pressing **Activar cámara**. Disable it in settings to stop every media track and terminate the inference worker. A mirrored video with all 21 landmarks appears only with **Depuración** enabled.
 

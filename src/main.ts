@@ -9,6 +9,7 @@ import type { Field } from './physics';
 
 const $ = <T extends HTMLElement = HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
 const settings = new SettingsManager();
+if (new URLSearchParams(location.search).get('debug') === '1') settings.value.debug = true;
 let toastTimer = 0;
 function notify(message: string, duration = 5000) {
   $('#toast').textContent = message; $('#toast').classList.add('visible'); clearTimeout(toastTimer);
@@ -52,7 +53,18 @@ function start() {
     else { $('#intro').style.visibility = ''; $('#settings').focus(); immerse(); }
   }
   $('#settings').onclick = () => panel($('#panel').hidden); $('#close').onclick = () => panel(false);
-  window.addEventListener('keydown', event => { if (event.key === 'Escape') panel(false); if (event.key.toLowerCase() === 'h' && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLSelectElement)) { if (document.body.classList.contains('immersive')) { document.body.classList.remove('immersive'); $('#intro').inert = false; $('header').inert = false; } else immerse(); } });
+  const help = $<HTMLDialogElement>('#help-dialog');
+  function toggleHelp() {
+    if (help.open) help.close();
+    else { immerse(); help.showModal(); }
+  }
+  $('#help').onclick = toggleHelp;
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { if (!help.open && !$('#panel').hidden) panel(false); return; }
+    if (event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement || event.target instanceof HTMLTextAreaElement || (event.target instanceof HTMLElement && event.target.isContentEditable)) return;
+    if (event.key.toLowerCase() === 'h') { event.preventDefault(); toggleHelp(); }
+    if (event.key.toLowerCase() === 'd') { event.preventDefault(); $<HTMLInputElement>('#debug').click(); }
+  });
   for (const key of ['sensitivity', 'intensity', 'speed', 'density', 'dpr'] as const) {
     const control = $<HTMLInputElement>(`#${key}`), output = $<HTMLOutputElement>(`#${key}-value`);
     control.value = String(settings.value[key]); output.value = `${settings.value[key].toFixed(2)}×`;
