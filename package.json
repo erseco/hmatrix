@@ -12,7 +12,7 @@
     "postinstall": "npm run assets"
   },
   "dependencies": {
-    "@mediapipe/tasks-vision": "0.10.32",
+    "@mediapipe/tasks-vision": "1.1.0",
     "three": "^0.186.1"
   },
   "devDependencies": {
